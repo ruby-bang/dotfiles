@@ -1,0 +1,45 @@
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+format = "(bold green)$directory($username)$git_branch$git_commit[➜](bold red)  "
+# Inserts a blank line between shell prompts
+
+# Replace the '❯' symbol in the prompt with '➜'
+
+# Disable the package module, hiding it from the prompt completely
+[package]
+disabled = true
+
+
+[username]
+disabled = false
+show_always = true
+style_user = "white bold"
+style_root = "white bold"
+format = '\([$user](bold fg:#FF0000)\) '
+
+[directory]
+truncation_length = 2
+truncate_to_repo = false
+style = "bold blue"
+[git_branch]
+style = "bold purple"
+# symbol = "🌱 "
+truncation_length = 100  # no truncation
+truncation_symbol = "..."
+
+[git_status]
+modified = "M"
+untracked = "U"
+deleted = "🗑 "
+renamed = "👅"
+conflicted = "🏳 "
+ahead = "⇡"  # unpushed commit
+behind = "😰"
+diverged = "😵"
+staged.value = "++"
+staged.style = "green"
+staged_count.enabled = true
+staged_count.style = "green"
+
+[palettes.my]
+magenta= "#FF00FF"
