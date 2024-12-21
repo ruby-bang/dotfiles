@@ -37,7 +37,7 @@ sudo pacman -S polybar
 sudo pacman -S stow 
 ```
 
-### when all done. then you need to run this inside dotfiles directory
+### When everything is ready, just run this in your dotfiles directory.
 ``` bash
 stow .
 ```
