@@ -32,4 +32,12 @@ curl -sS https://starship.rs/install.sh | sh
 sudo pacman -S polybar
 ```
 
+* STOW
+``` bash
+sudo pacman -S stow 
+```
 
+### when all done. then you need to run this inside dotfiles directory
+``` bash
+stow .
+```
