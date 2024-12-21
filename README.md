@@ -1,6 +1,6 @@
-# dotfiles
+# DOTFILES
 
-clone this to your home direktory 
+clone this to your home direktory.
 
 ## REQUIREMENT
 * PICOM
@@ -42,3 +42,5 @@ sudo pacman -S stow
 ``` bash
 stow .
 ```
+
+## It work on my machine.
