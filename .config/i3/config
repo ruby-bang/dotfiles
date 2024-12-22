@@ -51,7 +51,7 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 exec --no-startup-id nm-applet
 
 exec --no-startup-id i3-msg "workspace 1; exec kitty"
-exec --no-startup-id sh -c "sleep 0.5; i3-msg 'workspace 2; exec chromium'"
+exec --no-startup-id sh -c "sleep 0.2; i3-msg 'workspace 2; exec chromium'"
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
