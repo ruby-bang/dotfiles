@@ -1,9 +1,10 @@
-# dotfiles
+# DOTFILES
+
+clone this to your home direktory.
 
 ## REQUIREMENT
 * PICOM
 
-if you using arch linux 
 ``` bash
 sudo pacman -S picom
 ```
@@ -37,7 +38,9 @@ sudo pacman -S polybar
 sudo pacman -S stow 
 ```
 
-### When everything is ready, just run this in your dotfiles directory.
+### When everything is ready, just run this in dotfiles directory.
 ``` bash
 stow .
 ```
+
+## It work on my machine.
