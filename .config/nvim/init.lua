@@ -421,6 +421,9 @@ require('lazy').setup({
       capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
       local servers = {
+        tailwindcss = {
+          filetypes_include = { 'rs' },
+        },
 
         clangd = {
           capabilities = capabilities,
@@ -430,7 +433,6 @@ require('lazy').setup({
         },
 
         lua_ls = {
-
           settings = {
             Lua = {
               completion = {
