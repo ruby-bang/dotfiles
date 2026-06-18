@@ -30,5 +30,6 @@ vim.keymap.set('n', '<leader>;', ':TagbarToggle<CR><C-w><C-l>', { desc = 'select
 vim.keymap.set('n', '<C-a>', 'ggVG', { desc = 'select all' })
 vim.keymap.set('n', '<S-Down>', '2jzz', { desc = 'select all' })
 vim.keymap.set('n', '<S-Up>', '2kzz', { desc = 'select all' })
-vim.keymap.set('n', '<M-S-1>', ':AsyncRun<Space>', { noremap = true, silent = false })
+vim.keymap.set('n', '<M-S-1>', ':Compile<CR>', { noremap = true, silent = false })
 vim.keymap.set('n', '\\', '<CMD>Oil<CR>', { desc = 'Open parent directory' })
+vim.keymap.set('n', '<S-b>', ':lua require("buffer_manager.ui").toggle_quick_menu()<CR>', { desc = 'Open List Buffer', silent = true })

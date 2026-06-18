@@ -30,6 +30,25 @@ return {
   'tpope/vim-sleuth',
   { 'Civitasv/cmake-tools.nvim' },
   {
+
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    'j-morano/buffer_manager.nvim',
+    config = function()
+      require('buffer_manager').setup {
+        select_menu_item_commands = {
+          v = {
+            key = '<C-v>',
+            command = 'vsplit',
+          },
+          h = {
+            key = '<C-h>',
+            command = 'split',
+          },
+        },
+      }
+    end,
+  },
+  {
     'monkoose/DoNe',
     lazy = true,
     -- optional configuration
@@ -42,12 +61,45 @@ return {
 
   { 'numToStr/Comment.nvim', opts = {} },
   {
+    'ej-shafran/compile-mode.nvim',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+    },
+    config = function()
+      ---@type CompileModeOpts
+      vim.g.compile_mode = {
+        -- if you use something like `nvim-cmp` or `blink.cmp` for completion,
+        -- set this to fix tab completion in command mode:
+        -- input_word_completion = true,
+        error_regexp_table = {
+          -- parsing rustc errors
+          rustc = {
+            regex = [[^\s*-->\s*\([^:]\+\):\(\d\+\):\(\d\+\)]],
+            filename = 1,
+            row = 2,
+            col = 3,
+          },
+        },
+        default_command = '',
+        focus_compilation_buffer = true,
+        recompile_no_fail = true,
+
+        -- to add ANSI escape code support, add:
+        -- baleia_setup = true,
+
+        -- to make `:Compile` replace special characters (e.g. `%`) in
+        -- the command (and behave more like `:!`), add:
+        -- bang_expansion = true,
+      }
+    end,
+  },
+  {
     'skywind3000/asyncrun.vim',
     cmd = { 'AsyncRun', 'AsyncStop', 'AsyncReRun' }, -- lazy load saat command ini dipanggil
     config = function()
       vim.g.asyncrun_open = 26 -- 0=never, 6=always at bottom
-      vim.g.asyncrun_bell = 1 -- matikan bell
-      vim.g.asyncrun_focus = 2
+      -- vim.g.asyncrun_bell = 1 -- matikan bell
+      -- vim.g.asyncrun_focus = 1
     end,
   },
 
@@ -470,7 +522,7 @@ return {
         contrast = 'hard',
         palette_overrides = {},
         overrides = {
-          CursorLine = { bg = '#3f2f2f' },
+          CursorLine = { bg = '#3d3d3d' },
           CursorLineNr = { bg = '#fabd3f', fg = '#000000' },
           CursorColumn = { bg = '#f4f3f3' },
           ColorColumn = { bg = '#f4f3f3' },
