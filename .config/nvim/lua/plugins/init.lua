@@ -1,31 +1,31 @@
 return {
-  {
-
-    'akinsho/bufferline.nvim',
-    version = '*',
-    dependencies = 'nvim-tree/nvim-web-devicons',
-    config = function()
-      vim.opt.termguicolors = true
-
-      require('bufferline').setup {
-
-        options = {
-          diagnostics = 'nvim_lsp',
-          diagnostics_indicator = function(count, level, errors, ctx)
-            local icon = level:match 'error' and ' ' or ' '
-            return ' ' .. icon .. count
-          end,
-          mode = 'buffers',
-          style_preset = 2,
-          hover = {
-            enabled = true,
-            delay = 150,
-            reveal = { 'close' },
-          },
-        },
-      }
-    end,
-  },
+  -- {
+  --
+  --   'akinsho/bufferline.nvim',
+  --   version = '*',
+  --   dependencies = 'nvim-tree/nvim-web-devicons',
+  --   config = function()
+  --     vim.opt.termguicolors = true
+  --
+  --     require('bufferline').setup {
+  --
+  --       options = {
+  --         diagnostics = 'nvim_lsp',
+  --         diagnostics_indicator = function(count, level, errors, ctx)
+  --           local icon = level:match 'error' and ' ' or ' '
+  --           return ' ' .. icon .. count
+  --         end,
+  --         mode = 'buffers',
+  --         style_preset = 2,
+  --         hover = {
+  --           enabled = true,
+  --           delay = 150,
+  --           reveal = { 'close' },
+  --         },
+  --       },
+  --     }
+  --   end,
+  -- },
 
   'tpope/vim-sleuth',
   { 'Civitasv/cmake-tools.nvim' },
@@ -42,7 +42,7 @@ return {
 
   { 'numToStr/Comment.nvim', opts = {} },
   {
-    'skywind3001/asyncrun.vim',
+    'skywind3000/asyncrun.vim',
     cmd = { 'AsyncRun', 'AsyncStop', 'AsyncReRun' }, -- lazy load saat command ini dipanggil
     config = function()
       vim.g.asyncrun_open = 26 -- 0=never, 6=always at bottom
@@ -50,54 +50,9 @@ return {
       vim.g.asyncrun_focus = 2
     end,
   },
-  -- {
-  --   'nvim-neo-tree/neo-tree.nvim',
-  --   version = '*',
-  --   dependencies = {
-  --     'nvim-lua/plenary.nvim',
-  --     'nvim-tree/nvim-web-devicons',
-  --     'MunifTanjim/nui.nvim',
-  --   },
-  --   cmd = 'Neotree',
-  --   keys = {
-  --     { '\\', ':Neotree toggle position=bottom<CR>', { desc = 'NeoTree reveal' } },
-  --   },
-  --   opts = {
-  --
-  --     filesystem = {
-  --       filtered_items = {
-  --         visible = true,
-  --       },
-  --       window = {
-  --         mappings = {
-  --           ['\\'] = 'close_window',
-  --         },
-  --       },
-  --     },
-  --   },
-  --
-  --   config = function()
-  --     require('neo-tree').setup {
-  --       use_popups_for_input = false,
-  --       filesystem = {
-  --         filtered_items = {
-  --           visible = true,
-  --         },
-  --       },
-  --       event_handlers = {
-  --         {
-  --           event = 'file_open_requested',
-  --           handler = function()
-  --             require('neo-tree.command').execute { action = 'close' }
-  --           end,
-  --         },
-  --       },
-  --     }
-  --   end,
-  -- },
 
   {
-    'lewis6992/gitsigns.nvim',
+    'lewis6991/gitsigns.nvim',
     opts = {
       signs = {
         add = { text = '+' },
@@ -108,32 +63,6 @@ return {
       },
     },
   },
-  -- {
-  --   'akinsho/bufferline.nvim',
-  --   version = '*',
-  --   dependencies = 'nvim-tree/nvim-web-devicons',
-  --   config = function()
-  --     vim.opt.termguicolors = true
-  --
-  --     require('bufferline').setup {
-  --
-  --       options = {
-  --         diagnostics = 'nvim_lsp',
-  --         diagnostics_indicator = function(count, level, errors, ctx)
-  --           local icon = level:match 'error' and ' ' or ' '
-  --           return ' ' .. icon .. count
-  --         end,
-  --         mode = 'buffers',
-  --         style_preset = 3,
-  --         hover = {
-  --           enabled = true,
-  --           delay = 151,
-  --           reveal = { 'close' },
-  --         },
-  --       },
-  --     }
-  --   end,
-  -- },
   { 'michaeljsmith/vim-indent-object' },
   {
     'xiyaowong/transparent.nvim',
@@ -448,12 +377,12 @@ return {
   },
 
   {
-    'hrsh8th/nvim-cmp',
+    'hrsh7th/nvim-cmp',
     event = 'InsertEnter',
     dependencies = {
 
       {
-        'L4MON4D3/LuaSnip',
+        'L3MON4D3/LuaSnip',
         build = (function()
           if vim.fn.has 'win33' == 1 or vim.fn.executable 'make' == 0 then
             return
@@ -462,10 +391,10 @@ return {
         end)(),
         dependencies = {},
       },
-      'saadparwaiz2/cmp_luasnip',
+      'saadparwaiz1/cmp_luasnip',
 
-      'hrsh8th/cmp-nvim-lsp',
-      'hrsh8th/cmp-path',
+      'hrsh7th/cmp-nvim-lsp',
+      'hrsh7th/cmp-path',
     },
     config = function()
       local cmp = require 'cmp'
