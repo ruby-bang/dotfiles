@@ -7,10 +7,7 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
-	"edit_predictions": {
-  "provider": "zed"
- },
- "project_panel": {
+	"project_panel": {
   "dock": "left"
  },
  "outline_panel": {
@@ -29,6 +26,9 @@
  },
  "icon_theme": "Zed (Default)",
 	"show_edit_predictions": false,
+	"features": {
+		"edit_prediction_provider": "zed"
+	},
 	"vim_mode": true,
 	"ui_font_size": 18,
 	"buffer_font_size": 18,
