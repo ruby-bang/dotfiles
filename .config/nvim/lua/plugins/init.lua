@@ -1,6 +1,4 @@
-return {
-  -- {
-  --
+return { -- {
   --   'akinsho/bufferline.nvim',
   --   version = '*',
   --   dependencies = 'nvim-tree/nvim-web-devicons',
@@ -27,6 +25,24 @@ return {
   --   end,
   -- },
 
+  {
+    'NeogitOrg/neogit',
+    lazy = true,
+    dependencies = {
+      -- Only one of these is needed.
+      'sindrets/diffview.nvim', -- optional
+
+      -- For a custom log pager
+      'm00qek/baleia.nvim', -- optional
+
+      -- Only one of these is needed.
+      'nvim-telescope/telescope.nvim', -- optional
+    },
+    cmd = 'Neogit',
+    keys = {
+      { '<leader>gg', '<cmd>Neogit<cr>', desc = 'Show Neogit UI' },
+    },
+  },
   'tpope/vim-sleuth',
   { 'Civitasv/cmake-tools.nvim' },
   {
