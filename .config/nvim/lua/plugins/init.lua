@@ -42,6 +42,24 @@ return { -- {
     keys = {
       { '<leader>gg', '<cmd>Neogit<cr>', desc = 'Show Neogit UI' },
     },
+
+    config = function()
+      require('neogit').setup {
+        overrides = {
+          NeogitDiffAdd = {
+            fg = '#FFFFFF',
+            bg = '#156600',
+          },
+        },
+        disable_line_numbers = false,
+        -- Disable relative line numbers
+        disable_relative_line_numbers = false,
+        disable_context_highlighting = false,
+        status = {
+          HEAD_folded = false,
+        },
+      }
+    end,
   },
   'tpope/vim-sleuth',
   { 'Civitasv/cmake-tools.nvim' },
@@ -549,6 +567,8 @@ return { -- {
           CursorColumn = { bg = '#f4f3f3' },
           ColorColumn = { bg = '#f4f3f3' },
           Visual = { bg = '#f4f3f3' },
+          DiffAdd = { bg = '#23452d' },
+          DiffDelete = { bg = '#562a2b' },
         },
         dim_inactive = true,
         transparent_mode = true,

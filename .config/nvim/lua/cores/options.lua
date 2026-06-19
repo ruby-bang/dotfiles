@@ -1,6 +1,5 @@
 -- Leader
 vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
 
 -- UI
 vim.opt.number = true
@@ -89,3 +88,15 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     }
   end,
 })
+
+-- vim.api.nvim_set_hl(0, 'DiffAdd', {
+--   fg = '#FFFFFF',
+--   bg = '#156600',
+-- })
+-- vim.api.nvim_set_hl(0, 'NeogitDiffAddCursor', { bg = '#23452d' })
+-- vim.api.nvim_set_hl(0, 'NeogitDiffAddHighlight', { bg = '#23452d' })
+-- vim.api.nvim_set_hl(0, 'NeogitDiffAddInline', { bg = '#23452d' })
+--
+vim.api.nvim_set_hl(0, 'NeogitDiffDeleteCursor', { fg = '#FFA500' })
+vim.api.nvim_set_hl(0, 'NeogitDiffDeleteHighlight', { fg = '#ffffff' })
+vim.api.nvim_set_hl(0, 'NeogitDiffContextCursor', { bg = '#444444' })
