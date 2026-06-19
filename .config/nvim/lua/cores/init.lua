@@ -1,2 +1,2 @@
-require 'cores.keymaps'
 require 'cores.options'
+require 'cores.keymaps'

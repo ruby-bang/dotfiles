@@ -1,35 +1,137 @@
-vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+local map = vim.keymap.set
 
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
-vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
-vim.keymap.set('n', '<leader>p', ':Ex<CR>', { desc = 'Open File Tree' })
+-- Clear search highlight
+map('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
-vim.keymap.set('n', 'L', ':bn<CR>', { desc = 'Next buffer' })
-vim.keymap.set('n', '<C-left>', ':bn<CR>', { desc = 'Next buffer' })
+-- Diagnostics
+map('n', '[d', vim.diagnostic.goto_prev, {
+  desc = 'Go to previous diagnostic message',
+})
 
-vim.keymap.set('n', 'H', ':bp<CR>', { desc = 'Next buffer' })
-vim.keymap.set('n', '<C-Right>', ':bp<CR>', { desc = 'Next buffer' })
-vim.keymap.set('n', '<C-J>', 'mzJ`z')
-vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv")
-vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv")
-vim.keymap.set('n', '<leader>k', '<cmd>lnext<CR>zz')
-vim.keymap.set('n', '<leader>j', '<cmd>lprev<CR>zz')
-vim.keymap.set('n', '<C-UP>', '<C-u>zz')
-vim.keymap.set('n', '<C-DOWN>', '<C-d>zz')
+map('n', ']d', vim.diagnostic.goto_next, {
+  desc = 'Go to next diagnostic message',
+})
 
-vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
+map('n', '<leader>e', vim.diagnostic.open_float, {
+  desc = 'Show diagnostic messages',
+})
 
-vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
-vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
-vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
-vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
-vim.keymap.set('n', '<C-w>b', ':bd<cr>', { silent = true, desc = 'close Current Buffer' })
-vim.keymap.set('n', '<leader>;', ':TagbarToggle<CR><C-w><C-l>', { desc = 'select all' })
-vim.keymap.set('n', '<C-a>', 'ggVG', { desc = 'select all' })
-vim.keymap.set('n', '<S-Down>', '2jzz', { desc = 'select all' })
-vim.keymap.set('n', '<S-Up>', '2kzz', { desc = 'select all' })
-vim.keymap.set('n', '<M-S-1>', ':Compile<CR>', { noremap = true, silent = false })
-vim.keymap.set('n', '\\', '<CMD>Oil<CR>', { desc = 'Open parent directory' })
-vim.keymap.set('n', '<S-b>', ':lua require("buffer_manager.ui").toggle_quick_menu()<CR>', { desc = 'Open List Buffer', silent = true })
+map('n', '<leader>q', vim.diagnostic.setloclist, {
+  desc = 'Open diagnostic quickfix list',
+})
+
+-- File Explorer
+map('n', '<leader>p', '<cmd>Ex<CR>', {
+  desc = 'Open file explorer',
+})
+
+map('n', '\\', '<cmd>Oil<CR>', {
+  desc = 'Open parent directory',
+})
+
+-- Buffer Navigation
+map('n', 'L', '<cmd>bnext<CR>', {
+  desc = 'Next buffer',
+})
+
+map('n', 'H', '<cmd>bprevious<CR>', {
+  desc = 'Previous buffer',
+})
+
+map('n', '<C-Right>', '<cmd>bnext<CR>', {
+  desc = 'Next buffer',
+})
+
+map('n', '<C-Left>', '<cmd>bprevious<CR>', {
+  desc = 'Previous buffer',
+})
+
+map('n', '<leader>bd', '<cmd>bd<CR>', {
+  desc = 'Close current buffer',
+})
+
+-- Window Navigation
+map('n', '<C-h>', '<C-w>h', {
+  desc = 'Move to left window',
+})
+
+map('n', '<C-j>', '<C-w>j', {
+  desc = 'Move to lower window',
+})
+
+map('n', '<C-k>', '<C-w>k', {
+  desc = 'Move to upper window',
+})
+
+map('n', '<C-l>', '<C-w>l', {
+  desc = 'Move to right window',
+})
+
+-- Join lines and keep cursor position
+map('n', 'J', 'mzJ`z', {
+  desc = 'Join lines',
+})
+
+-- Move selected lines
+map('v', 'J', ":m '>+1<CR>gv=gv", {
+  desc = 'Move selection down',
+})
+
+map('v', 'K', ":m '<-2<CR>gv=gv", {
+  desc = 'Move selection up',
+})
+
+-- Location List Navigation
+map('n', '<leader>j', '<cmd>lprev<CR>zz', {
+  desc = 'Previous location list item',
+})
+
+map('n', '<leader>k', '<cmd>lnext<CR>zz', {
+  desc = 'Next location list item',
+})
+
+-- Half-page movement with centered cursor
+map('n', '<C-u>', '<C-u>zz', {
+  desc = 'Half page up',
+})
+
+map('n', '<C-d>', '<C-d>zz', {
+  desc = 'Half page down',
+})
+
+-- Terminal
+map('t', '<Esc><Esc>', '<C-\\><C-n>', {
+  desc = 'Exit terminal mode',
+})
+
+-- Select all
+map('n', '<C-a>', 'ggVG', {
+  desc = 'Select all',
+})
+
+-- Faster cursor movement
+map('n', '<S-Down>', '2jzz', {
+  desc = 'Move down 2 lines',
+})
+
+map('n', '<S-Up>', '2kzz', {
+  desc = 'Move up 2 lines',
+})
+
+-- Compile
+map('n', '<M-S-1>', '<cmd>Compile<CR>', {
+  silent = false,
+  desc = 'Compile project',
+})
+
+-- Tagbar
+map('n', '<leader>;', '<cmd>TagbarToggle<CR><C-w>l', {
+  desc = 'Toggle Tagbar',
+})
+
+-- Buffer Manager
+map('n', '<leader>b', function()
+  require('buffer_manager.ui').toggle_quick_menu()
+end, {
+  desc = 'Open buffer list',
+})
