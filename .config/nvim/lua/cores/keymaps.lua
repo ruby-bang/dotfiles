@@ -20,11 +20,6 @@ map('n', '<leader>q', vim.diagnostic.setloclist, {
   desc = 'Open diagnostic quickfix list',
 })
 
--- File Explorer
-map('n', '<leader>p', '<cmd>Ex<CR>', {
-  desc = 'Open file explorer',
-})
-
 map('n', '\\', '<cmd>Oil<CR>', {
   desc = 'Open parent directory',
 })
