@@ -69,13 +69,12 @@ vim.api.nvim_set_hl(0, 'Visual', {
 
 -- Cursor colors
 vim.api.nvim_set_hl(0, 'CursorNormal', {
-  fg = '#2ecc71',
-  bg = '#2ecc71',
+  bg = '#e73722',
 })
 
 vim.api.nvim_set_hl(0, 'CursorInsert', {
-  fg = '#fabd2f',
-  bg = '#fabd2f',
+  fg = '#000000',
+  bg = '#2ecc71',
 })
 
 -- Highlight yanked text
