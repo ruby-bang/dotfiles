@@ -18,6 +18,7 @@ require('lazy').setup {
     notify = false,
   },
 }
+
 -- require('lazy').setup('plugins', {
 --   -- ui = {
 --   --

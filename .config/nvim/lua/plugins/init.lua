@@ -104,7 +104,7 @@ return { -- {
       vim.g.compile_mode = {
         -- if you use something like `nvim-cmp` or `blink.cmp` for completion,
         -- set this to fix tab completion in command mode:
-        -- input_word_completion = true,
+        input_word_completion = true,
         error_regexp_table = {
           -- parsing rustc errors
           rustc = {
@@ -204,18 +204,77 @@ return { -- {
     end,
   },
   {
-    'windwp/nvim-autopairs',
-    event = 'InsertEnter',
+    'saghen/blink.pairs',
+    dependencies = 'saghen/blink.lib',
 
-    dependencies = { 'hrsh8th/nvim-cmp' },
-    config = function()
-      require('nvim-autopairs').setup {}
-
-      local cmp_autopairs = require 'nvim-autopairs.completion.cmp'
-      local cmp = require 'cmp'
-      cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
+    version = '*',
+    -- download prebuilt binaries from github releases, must be on a versioned release
+    build = function()
+      require('blink.pairs').download():pwait(60000)
     end,
+    -- OR build from source
+    -- build = function() require('blink.pairs').build():pwait(60000) end,
+
+    --- @module 'blink.pairs'
+    --- @type blink.pairs.Config
+    opts = {
+      mappings = {
+        -- you can call require("blink.pairs.mappings").enable()
+        -- and require("blink.pairs.mappings").disable()
+        -- to enable/disable mappings at runtime
+        enabled = true,
+        cmdline = true,
+        -- or disable with `vim.g.pairs = false` (global) and `vim.b.pairs = false` (per-buffer)
+        -- and/or with `vim.g.blink_pairs = false` and `vim.b.blink_pairs = false`
+        disabled_filetypes = {},
+        wrap = {
+          -- move closing pair via motion
+          ['<C-b>'] = 'motion',
+          -- move opening pair via motion
+          ['<C-S-b>'] = 'motion_reverse',
+          -- set to 'treesitter' or 'treesitter_reverse' to use treesitter instead of motions
+          -- set to nil, '' or false to disable the mapping
+          -- normal_mode = {} <- for normal mode mappings, only supports 'motion' and 'motion_reverse'
+        },
+        -- see the defaults:
+        -- https://github.com/Saghen/blink.pairs/blob/main/lua/blink/pairs/config/mappings.lua#L52
+        pairs = {},
+      },
+      highlights = {
+        enabled = true,
+        -- requires require('vim._core.ui2').enable({}), otherwise has no effect
+        cmdline = true,
+        -- set to { 'BlinkPairs' } to disable rainbow highlighting
+        groups = { 'BlinkPairsOrange', 'BlinkPairsPurple', 'BlinkPairsBlue' },
+        unmatched_group = 'BlinkPairsUnmatched',
+
+        -- highlights matching pairs under the cursor
+        matchparen = {
+          enabled = true,
+          -- known issue where typing won't update matchparen highlight, disabled by default
+          cmdline = false,
+          -- also include pairs not on top of the cursor, but surrounding the cursor
+          include_surrounding = false,
+          group = 'BlinkPairsMatchParen',
+          priority = 250,
+        },
+      },
+      debug = false,
+    },
   },
+  -- {
+  --   'windwp/nvim-autopairs',
+  --   event = 'InsertEnter',
+  --
+  --   dependencies = { 'hrsh8th/nvim-cmp' },
+  --   config = function()
+  --     require('nvim-autopairs').setup {}
+  --
+  --     local cmp_autopairs = require 'nvim-autopairs.completion.cmp'
+  --     local cmp = require 'cmp'
+  --     cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
+  --   end,
+  -- },
   {
     'alexghergh/nvim-tmux-navigation',
     config = function()
@@ -236,8 +295,7 @@ return { -- {
 
   {
     'nvim-telescope/telescope.nvim',
-    event = 'VimEnter',
-    branch = '1.1.x',
+    branch = '0.1.x',
     dependencies = {
       'sharkdp/fd',
       'nvim-lua/plenary.nvim',
@@ -324,6 +382,7 @@ return { -- {
   {
     'neovim/nvim-lspconfig',
     dependencies = {
+      'saghen/blink.cmp',
 
       { 'williamboman/mason.nvim', config = true },
       'williamboman/mason-lspconfig.nvim',
@@ -394,7 +453,7 @@ return { -- {
       })
 
       local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
+      capabilities = require('blink.cmp').get_lsp_capabilities()
 
       local servers = {
         tailwindcss = {
@@ -468,76 +527,145 @@ return { -- {
     },
   },
 
+  -- {
+  --   'hrsh7th/nvim-cmp',
+  --   event = 'InsertEnter',
+  --   dependencies = {
+  --
+  --     {
+  --       'L3MON4D3/LuaSnip',
+  --       build = (function()
+  --         if vim.fn.has 'win33' == 1 or vim.fn.executable 'make' == 0 then
+  --           return
+  --         end
+  --         return 'make install_jsregexp'
+  --       end)(),
+  --       dependencies = {},
+  --     },
+  --     'saadparwaiz1/cmp_luasnip',
+  --
+  --     'hrsh7th/cmp-nvim-lsp',
+  --     'hrsh7th/cmp-path',
+  --   },
+  --   config = function()
+  --     local cmp = require 'cmp'
+  --     local luasnip = require 'luasnip'
+  --     luasnip.config.setup {}
+  --
+  --     cmp.setup {
+  --       snippet = {
+  --         expand = function(args)
+  --           luasnip.lsp_expand(args.body)
+  --         end,
+  --       },
+  --       completion = { completeopt = 'menu,menuone,noinsert' },
+  --
+  --       mapping = cmp.mapping.preset.insert {
+  --
+  --         ['<C-n>'] = cmp.mapping.select_next_item(),
+  --
+  --         ['<C-p>'] = cmp.mapping.select_prev_item(),
+  --
+  --         ['<C-b>'] = cmp.mapping.scroll_docs(-3),
+  --         ['<C-f>'] = cmp.mapping.scroll_docs(5),
+  --
+  --         ['<C-y>'] = cmp.mapping.confirm { select = true },
+  --
+  --         ['<CR>'] = cmp.mapping.confirm { select = true },
+  --
+  --         ['<C-Space>'] = cmp.mapping.complete {},
+  --
+  --         ['<tab>'] = cmp.mapping(function()
+  --           if luasnip.expand_or_locally_jumpable() then
+  --             luasnip.expand_or_jump()
+  --           end
+  --         end, { 'i', 's' }),
+  --         ['<C-h>'] = cmp.mapping(function()
+  --           if luasnip.locally_jumpable(0) then
+  --             luasnip.jump(0)
+  --           end
+  --         end, { 'i', 's' }),
+  --       },
+  --       sources = {
+  --         { name = 'nvim_lsp' },
+  --         { name = 'luasnip' },
+  --         { name = 'path' },
+  --       },
+  --     }
+  --   end,
+  -- },
+
   {
-    'hrsh7th/nvim-cmp',
-    event = 'InsertEnter',
-    dependencies = {
+    'saghen/blink.cmp',
+    -- optional: provides snippets for the snippet source
+    dependencies = { 'rafamadriz/friendly-snippets' },
 
-      {
-        'L3MON4D3/LuaSnip',
-        build = (function()
-          if vim.fn.has 'win33' == 1 or vim.fn.executable 'make' == 0 then
-            return
-          end
-          return 'make install_jsregexp'
-        end)(),
-        dependencies = {},
-      },
-      'saadparwaiz1/cmp_luasnip',
+    -- use a release tag to download pre-built binaries
+    version = '1.*',
+    -- AND/OR build from source
+    -- build = 'cargo build --release',
+    -- If you use nix, you can build from source with:
+    -- build = 'nix run .#build-plugin',
 
-      'hrsh7th/cmp-nvim-lsp',
-      'hrsh7th/cmp-path',
-    },
-    config = function()
-      local cmp = require 'cmp'
-      local luasnip = require 'luasnip'
-      luasnip.config.setup {}
+    ---@module 'blink.cmp'
+    ---@type blink.cmp.Config
+    opts = {
+      -- 'default' (recommended) for mappings similar to built-in completions (C-y to accept)
+      -- 'super-tab' for mappings similar to vscode (tab to accept)
+      -- 'enter' for enter to accept
+      -- 'none' for no mappings
+      --
+      -- All presets have the following mappings:
+      -- C-space: Open menu or open docs if already open
+      -- C-n/C-p or Up/Down: Select next/previous item
+      -- C-e: Hide menu
+      -- C-k: Toggle signature help (if signature.enabled = true)
+      --
+      -- See :h blink-cmp-config-keymap for defining your own keymap
 
-      cmp.setup {
-        snippet = {
-          expand = function(args)
-            luasnip.lsp_expand(args.body)
+      -- Display a preview of the selected item on the current line
+      keymap = {
+        preset = 'default',
+        ['<CR>'] = { 'accept', 'fallback' },
+
+        ['<C-space>'] = {
+          function(cmp)
+            cmp.show { providers = { 'snippets' } }
           end,
         },
-        completion = { completeopt = 'menu,menuone,noinsert' },
+      },
 
-        mapping = cmp.mapping.preset.insert {
+      appearance = {
+        -- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
+        -- Adjusts spacing to ensure icons are aligned
+        nerd_font_variant = 'mono',
+      },
 
-          ['<C-n>'] = cmp.mapping.select_next_item(),
+      -- (Default) Only show the documentation popup when manually triggered
+      completion = {
+        documentation = { auto_show = true, auto_show_delay_ms = 100 },
+        ghost_text = { enabled = true },
+      },
 
-          ['<C-p>'] = cmp.mapping.select_prev_item(),
+      -- Default list of enabled providers defined so that you can extend it
+      -- elsewhere in your config, without redefining it, due to `opts_extend`
+      sources = {
+        default = { 'lsp', 'path', 'snippets', 'buffer' },
+      },
 
-          ['<C-b>'] = cmp.mapping.scroll_docs(-3),
-          ['<C-f>'] = cmp.mapping.scroll_docs(5),
-
-          ['<C-y>'] = cmp.mapping.confirm { select = true },
-
-          ['<CR>'] = cmp.mapping.confirm { select = true },
-
-          ['<C-Space>'] = cmp.mapping.complete {},
-
-          ['<tab>'] = cmp.mapping(function()
-            if luasnip.expand_or_locally_jumpable() then
-              luasnip.expand_or_jump()
-            end
-          end, { 'i', 's' }),
-          ['<C-h>'] = cmp.mapping(function()
-            if luasnip.locally_jumpable(0) then
-              luasnip.jump(0)
-            end
-          end, { 'i', 's' }),
-        },
-        sources = {
-          { name = 'nvim_lsp' },
-          { name = 'luasnip' },
-          { name = 'path' },
-        },
-      }
-    end,
+      -- (Default) Rust fuzzy matcher for typo resistance and significantly better performance
+      -- You may use a lua implementation instead by using `implementation = "lua"` or fallback to the lua implementation,
+      -- when the Rust fuzzy matcher is not available, by using `implementation = "prefer_rust"`
+      --
+      -- See the fuzzy documentation for more information
+      fuzzy = { implementation = 'prefer_rust_with_warning' },
+    },
+    opts_extend = { 'sources.default' },
   },
-
   {
     'ellisonleao/gruvbox.nvim',
+    name = 'gruvbox',
+    lazy = false,
     priority = 1001,
     config = true,
     opts = function()
@@ -573,12 +701,13 @@ return { -- {
         dim_inactive = true,
         transparent_mode = true,
       }
-      vim.o.background = 'dark'
 
-      vim.cmd.hi 'Comment gui=none'
+      vim.opt.background = 'dark'
+
       vim.cmd.colorscheme 'gruvbox'
     end,
   },
+
   {
     'rose-pine/neovim',
     name = 'rose-pine',
