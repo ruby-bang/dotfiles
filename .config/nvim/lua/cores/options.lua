@@ -61,23 +61,35 @@ vim.opt.guicursor = {
   'r-cr:block-CursorInsert',
 }
 
--- Highlight Visual selection
-vim.api.nvim_set_hl(0, 'Visual', {
-  bg = '#FFA500',
-})
-
--- Cursor colors
-vim.api.nvim_set_hl(0, 'CursorNormal', {
-  bg = '#e73722',
-})
-
-vim.api.nvim_set_hl(0, 'CursorInsert', {
-  fg = '#000000',
-  bg = '#2ecc71',
-})
+-- vim.api.nvim_set_hl(0, 'Visual', {
+--   fg = '#000000',
+--   bg = '#FFA500',
+-- })
+--
+-- vim.api.nvim_set_hl(0, 'IncSearch', {
+--   fg = '#282828',
+--   bg = '#fabd2f',
+-- })
+--
+-- -- Cursor colors
+-- vim.api.nvim_set_hl(0, 'CursorNormal', {
+--   bg = '#e73722',
+-- })
+--
+-- vim.api.nvim_set_hl(0, 'CursorInsert', {
+--   fg = '#000000', bg = '#2ecc71',
+-- })
 
 -- Highlight yanked text
 local yank_group = vim.api.nvim_create_augroup('highlight-yank', { clear = true })
+
+-- vim.api.nvim_set_hl(0, 'Normal', {
+--   bg = '#2ecc71',
+-- })
+--
+-- vim.api.nvim_set_hl(0, 'Normal', { bg = '#ffffff' })
+-- vim.api.nvim_set_hl(0, 'NormalNC', { bg = 'none' })
+-- vim.api.nvim_set_hl(0, 'NormalFloat', { bg = 'none' })
 
 vim.api.nvim_create_autocmd('TextYankPost', {
   group = yank_group,

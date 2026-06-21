@@ -130,3 +130,45 @@ map('n', '<leader>b', function()
 end, {
   desc = 'Open buffer list',
 })
+
+map('n', '<M-b>', function()
+  require('harpoon.ui').toggle_quick_menu()
+end, {
+  desc = 'next mark file',
+})
+
+map('n', '<leader>m', function()
+  require('harpoon.mark').add_file()
+end, {
+  desc = 'mark file',
+})
+
+map('n', '<M-p>', function()
+  require('harpoon.ui').nav_prev()
+end, {
+  desc = 'prev mark file',
+})
+
+map('n', '<M-n>', function()
+  require('harpoon.ui').nav_next()
+end, {
+  desc = 'next mark file',
+})
+
+map('n', '<M-1>', function()
+  require('harpoon.ui').nav_file(1)
+end, {
+  desc = 'next mark file',
+})
+
+map('n', '<M-2>', function()
+  require('harpoon.ui').nav_file(2)
+end, {
+  desc = 'next mark file',
+})
+
+map('n', '<M-3>', function()
+  require('harpoon.ui').nav_file(3)
+end, {
+  desc = 'next mark file',
+})

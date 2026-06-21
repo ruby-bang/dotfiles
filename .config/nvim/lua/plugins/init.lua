@@ -218,6 +218,7 @@ return { -- {
     --- @module 'blink.pairs'
     --- @type blink.pairs.Config
     opts = {
+
       mappings = {
         -- you can call require("blink.pairs.mappings").enable()
         -- and require("blink.pairs.mappings").disable()
@@ -498,7 +499,9 @@ return { -- {
       }
     end,
   },
-
+  {
+    'ThePrimeagen/harpoon',
+  },
   {
     'stevearc/conform.nvim',
     lazy = false,
@@ -649,8 +652,12 @@ return { -- {
 
       -- Default list of enabled providers defined so that you can extend it
       -- elsewhere in your config, without redefining it, due to `opts_extend`
+
+      signature = {
+        enabled = true,
+      },
       sources = {
-        default = { 'lsp', 'path', 'snippets', 'buffer' },
+        default = { 'lsp' },
       },
 
       -- (Default) Rust fuzzy matcher for typo resistance and significantly better performance
@@ -675,11 +682,11 @@ return { -- {
         underline = true,
         bold = true,
         italic = {
-          strings = true,
-          emphasis = true,
-          comments = true,
+          strings = false,
+          emphasis = false,
+          comments = false,
           operators = false,
-          folds = true,
+          folds = false,
         },
         strikethrough = true,
         invert_selection = false,
@@ -694,7 +701,17 @@ return { -- {
           CursorLineNr = { bg = '#fabd3f', fg = '#000000' },
           CursorColumn = { bg = '#f4f3f3' },
           ColorColumn = { bg = '#f4f3f3' },
-          Visual = { bg = '#f4f3f3' },
+          CursorNormal = {
+            bg = '#e73722',
+          },
+          CursorInsert = {
+            fg = '#000000',
+            bg = '#2ecc71',
+          },
+          Visual = {
+            --   fg = '#000000',
+            -- bg = '#fabd3f',
+          },
           DiffAdd = { bg = '#23452d' },
           DiffDelete = { bg = '#562a2b' },
         },
@@ -713,11 +730,13 @@ return { -- {
     name = 'rose-pine',
     config = function()
       require('rose-pine').setup {
-        disable_background = true,
         styles = {
+          bold = true,
           italic = false,
+          transparency = true,
         },
       }
+      -- vim.cmd 'colorscheme rose-pine'
     end,
   },
 
@@ -758,21 +777,37 @@ return { -- {
   {
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
-    opts = {
-      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' },
+    lazy = false,
+    branch = 'main',
 
-      auto_install = true,
-      highlight = {
-        enable = true,
+    config = function()
+      -- ensure parsers are installed
+      -- require('nvim-treesitter').install {
+      --
+      --   'bash',
+      --   'c',
+      --   'diff',
+      --   'html',
+      --   'lua',
+      --   'luadoc',
+      --   'markdown',
+      --   'markdown_inline',
+      --   'query',
+      --   'vim',
+      --   'vimdoc',
+      --   'javascript',
+      --   'rust',
+      --   'typescript',
+      --   'python',
+      -- }
 
-        additional_vim_regex_highlighting = { 'ruby' },
-      },
-      indent = { enable = true, disable = { 'ruby' } },
-    },
-    config = function(_, opts)
-      require('nvim-treesitter.install').prefer_git = true
-
-      require('nvim-treesitter.configs').setup(opts)
+      -- enable treesitter highlighting
+      vim.api.nvim_create_autocmd('FileType', {
+        pattern = { '<filetype>' },
+        callback = function()
+          vim.treesitter.start()
+        end,
+      })
     end,
   },
 }
