@@ -83,13 +83,6 @@ vim.opt.guicursor = {
 -- Highlight yanked text
 local yank_group = vim.api.nvim_create_augroup('highlight-yank', { clear = true })
 
--- vim.api.nvim_set_hl(0, 'Normal', {
---   bg = '#2ecc71',
--- })
---
--- vim.api.nvim_set_hl(0, 'Normal', { bg = '#ffffff' })
--- vim.api.nvim_set_hl(0, 'NormalNC', { bg = 'none' })
--- vim.api.nvim_set_hl(0, 'NormalFloat', { bg = 'none' })
 
 vim.api.nvim_create_autocmd('TextYankPost', {
   group = yank_group,
