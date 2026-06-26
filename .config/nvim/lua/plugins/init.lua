@@ -26,6 +26,11 @@ return { -- {
   -- },
 
   {
+    'mg979/vim-visual-multi',
+    config = function() end,
+  },
+
+  {
     'NeogitOrg/neogit',
     lazy = true,
     dependencies = {
@@ -98,6 +103,7 @@ return { -- {
     'ej-shafran/compile-mode.nvim',
     dependencies = {
       'nvim-lua/plenary.nvim',
+      { 'm00qek/baleia.nvim', tag = 'v1.3.0' },
     },
     config = function()
       ---@type CompileModeOpts
@@ -108,16 +114,19 @@ return { -- {
         error_regexp_table = {
           -- parsing rustc errors
           rustc = {
-            regex = [[^\s*-->\s*\([^:]\+\):\(\d\+\):\(\d\+\)]],
+            regex = [[^\s*-->\s*\([^:]\+\):\(\d\+\):\(\d\+\)$]],
             filename = 1,
             row = 2,
             col = 3,
+            priority = 100,
           },
         },
         default_command = '',
         focus_compilation_buffer = true,
         recompile_no_fail = true,
+        baleia_setup = true,
 
+        -- debug = true,
         -- to add ANSI escape code support, add:
         -- baleia_setup = true,
 

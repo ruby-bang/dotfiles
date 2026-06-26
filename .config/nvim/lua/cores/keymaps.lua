@@ -20,7 +20,7 @@ map('n', '<leader>q', vim.diagnostic.setloclist, {
   desc = 'Open diagnostic quickfix list',
 })
 
-map('n', '\\', '<cmd>Oil<CR>', {
+map('n', '-', '<cmd>Oil<CR>', {
   desc = 'Open parent directory',
 })
 
