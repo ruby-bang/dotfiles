@@ -26,11 +26,6 @@ return { -- {
   -- },
 
   {
-    'mg979/vim-visual-multi',
-    config = function() end,
-  },
-
-  {
     'NeogitOrg/neogit',
     lazy = true,
     dependencies = {
