@@ -21,7 +21,12 @@
 ;; accept. For example:
 ;;
 ;;
+
+
+
 (add-to-list 'exec-path (expand-file-name "~/.ghcup/bin"))
+(exec-path-from-shell-initialize)
+
 (setq-default tab-width 4)
 (setq c-basic-offset 4)
 (setq c-ts-mode-indent-offset 4)
@@ -149,6 +154,10 @@
 (after! dape
   (repeat-mode 1))
 
+(after! apheleia
+  (setf (alist-get 'odinfmt apheleia-formatters)
+        '("odinfmt" "-stdin")))
+
 (after! smartparens
   (require 'smartparens-config)
   (smartparens-global-mode 1)
@@ -271,6 +280,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
+(setq doom-gruvbox-dark-variant "hard")
 (setq doom-theme 'doom-gruvbox)
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
@@ -343,5 +353,6 @@
   ;; (map! :n "C-d" #'my/evil-scroll-down-and-center
   ;;       :n "C-u" #'my/evil-scroll-up-and-center)
   )
+
 
 (defalias '+default/search-project #'projectile-ripgrep)
